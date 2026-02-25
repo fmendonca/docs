@@ -1,0 +1,57 @@
+apiVersion: observability.openshift.io/v1
+kind: ClusterLogForwarder
+metadata:
+  name: logging
+  namespace: openshift-logging
+spec:
+  collector:
+    tolerations:
+      - operator: Exists
+    resources:
+      limits:
+        memory: 1Gi
+      requests:
+        cpu: 200m
+        memory: 1Gi
+  managementState: Managed
+  outputs:
+    - lokiStack:
+        authentication:
+          token:
+            from: serviceAccount
+        target:
+          name: logging-loki
+          namespace: openshift-logging
+      name: default-lokistack
+      tls:
+        ca:
+          configMapName: openshift-service-ca.crt
+          key: service-ca.crt
+      type: lokiStack
+  filters:
+  - name: multiline
+    type: detectMultilineException
+  pipelines:
+    - inputRefs:
+        - application
+      name: apps
+      filterRefs:
+      - multiline
+      outputRefs:
+        - default-lokistack
+    - inputRefs:
+        - infrastructure
+      name: infrastructure-logs
+      filterRefs:
+      - multiline
+      outputRefs:
+        - default-lokistack
+    - inputRefs:
+        - audit
+      name: audit-logs
+      filterRefs:
+      - multiline
+      outputRefs:
+        - default-lokistack
+  serviceAccount:
+    name: logging-collector
