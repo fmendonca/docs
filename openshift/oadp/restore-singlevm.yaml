@@ -1,0 +1,13 @@
+apiVersion: velero.io/v1
+kind: Restore
+metadata:
+  name: singlevmrestore
+  namespace: openshift-adp
+spec:
+  backupName: multiplevmbackup
+  restorePVs: true
+  LabelSelectors:
+    - matchLabels:
+        kubevirt.io/created-by: <datavolume_uid>
+    - matchLabels:
+        app: <vm_name>
