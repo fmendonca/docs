@@ -1,0 +1,35 @@
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+  name: oadp-dpa
+  namespace: openshift-adp
+spec:
+  configuration:
+    nodeAgent:
+      enable: true
+      uploaderType: kopia
+    velero:
+      featureFlags:
+        - EnableCSI
+      defaultPlugins:
+        - aws
+        - csi
+        - kubevirt
+        - openshift
+      resourceTimeout: 10m
+  backupLocations:
+    - velero:
+        default: true
+        provider: aws
+        config:
+          profile: default
+          region: "local-odf"
+          s3ForcePathStyle: "true"     
+          s3Url: http://<BUCKET_HOST>:443
+          insecureSkipTLSVerify: "true"
+        credential:
+          name: cloud-credentials
+          key: cloud
+        objectStorage:
+          bucket: "<BUCKET_NAME>"
+          prefix: vm-backups

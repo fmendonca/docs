@@ -1,0 +1,17 @@
+apiVersion: velero.io/v1
+kind: Backup
+metadata:
+  name: test-rhel-9-backup
+  namespace: openshift-adp
+  labels:
+    velero.io/storage-location: default
+spec:
+  includeClusterResources: false
+  includedNamespaces:
+    - test-vms
+  labelSelector:
+    matchExpressions:
+      - key: vm
+        operator: In
+        values: [test-rhel-9]
+  ttl: 168h0m0s      
