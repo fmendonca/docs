@@ -8,8 +8,3 @@ stringData:
   thanos.yaml: |
     type: AZURE
     config:
-      storage_account: lalalal
-      storage_account_key: lalallala
-      container: acm-observability
-      endpoint: lalalala
-      max_retries: 0
