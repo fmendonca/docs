@@ -1,0 +1,22 @@
+apiVersion: observability.open-cluster-management.io/v1beta2
+kind: MultiClusterObservability
+metadata:
+  name: observability
+  namespace: open-cluster-management-observability
+spec:
+  availabilityConfig: High
+  enableDownSampling: false
+  imagePullPolicy: Always
+  observabilityAddonSpec:
+    enableMetrics: true
+    interval: 15
+  retentionResolution1h: 30d
+  retentionResolution5m: 14d
+  retentionResolutionRaw: 5d
+  retentionInLocal: 24h
+  storageConfig:
+    metricObjectStorage:
+      name: thanos-object-storage
+      key: thanos.yaml
+    statefulSetSize: 30Gi
+    statefulSetStorageClass: managed-csi
