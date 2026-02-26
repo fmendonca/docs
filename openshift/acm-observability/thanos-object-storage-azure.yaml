@@ -6,5 +6,19 @@ metadata:
 type: Opaque
 stringData:
   thanos.yaml: |
-    type: AZURE
+    type: s3
     config:
+      bucket: $BUCKET_NAME
+      endpoint: $BUCKET_HOST
+      insecure: false
+      access_key: $AWS_ACCESS_KEY_ID
+      secret_key: $AWS_SECRET_ACCESS_KEY
+      http_config:
+        tls_config:
+          ca_file: /etc/s3-buckets/certs/ca.crt
+          insecure_skip_verify: false
+
+
+oc create secret generic bucket-tls \
+  --from-file=ca.crt=root_ca.crt \
+  -n open-cluster-management-observability
