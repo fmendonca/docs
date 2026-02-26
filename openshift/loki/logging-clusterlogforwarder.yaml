@@ -9,10 +9,10 @@ spec:
       - operator: Exists
     resources:
       limits:
-        memory: 1Gi
+        memory: 16Gi
       requests:
-        cpu: 200m
-        memory: 1Gi
+        cpu: 4000m
+        memory: 16Gi
   managementState: Managed
   outputs:
     - lokiStack:
