@@ -22,3 +22,10 @@ stringData:
 oc create secret generic bucket-tls \
   --from-file=ca.crt=root_ca.crt \
   -n open-cluster-management-observability
+
+
+oc -n open-cluster-management-observability get configmap service-ca-bundle -o jsonpath='{.data.service-ca\.crt}' > /tmp/service-ca.crt
+
+oc -n open-cluster-management-observability create secret generic s3-odf-ca --from-file=ca.crt=/tmp/service-ca.crt
+
+
