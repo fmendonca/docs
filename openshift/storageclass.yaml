@@ -1,0 +1,15 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: powermax-fc-sc
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+parameters:
+  SRP: SRP_1
+  SYMID: "000120001672"
+  ServiceLevel: Bronze
+  csi.storage.k8s.io/fstype: xfs
+provisioner: csi-powermax.dellemc.com
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
