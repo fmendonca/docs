@@ -1,0 +1,14 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: "windows2k22-iso" # Name of your data volume
+spec:
+  source:
+    http:
+      url: "https://10.102.224.242/win2k22_server.iso" # URL of the ISO
+  pvc:
+    accessModes:
+      - ReadWriteMany # Commonly needed for shared access
+    resources:
+      requests:
+        storage: "10Gi" # Size larger than the ISO
