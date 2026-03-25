@@ -1,0 +1,8 @@
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  name: powermax-snapclass
+driver: csi-powermax.dellemc.com
+deletionPolicy: Delete
+parameters:
+  SYMID: '000000000001'
